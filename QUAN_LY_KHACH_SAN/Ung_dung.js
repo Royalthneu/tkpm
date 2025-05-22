@@ -1,15 +1,17 @@
 // Ung_dung.js - Khởi động hệ thống quản lý khách sạn
+const express = require('express');
+const path = require('path');
+const Ung_dung = express();
 
-const EXPRESS = require("express");
-const PATH = require("path");
-const FS = require("fs");
-const XL_QUAN_LY_KHACH_SAN = require("./XL_QUAN_LY_KHACH_SAN");
+// Dẫn tới thư mục public nếu có:
+Ung_dung.use('/Media', express.static(path.join(__dirname, '../Media')));
+Ung_dung.use('/Du_lieu', express.static(path.join(__dirname, '../Du_lieu')));
 
-const Ung_dung = EXPRESS();
-
-Ung_dung.use("/Media", EXPRESS.static("..\\Media"));
-Ung_dung.use(express.static("..."));
-Ung_dung.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+// Khởi động
+const PORT = process.env.PORT || 3000;
+Ung_dung.listen(PORT, () => {
+    console.log(`Dịch vụ đang chạy tại cổng ${PORT}`);
+});
 
 // ==== Điều hướng trang chính
 Ung_dung.get("/", XL_Khoi_dong);
