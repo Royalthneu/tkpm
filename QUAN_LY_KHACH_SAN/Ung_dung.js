@@ -1,6 +1,9 @@
 // Ung_dung.js - Khởi động hệ thống quản lý khách sạn
 const express = require('express');
 const path = require('path');
+const fs = require("fs");
+const XL_QUAN_LY_KHACH_SAN = require("./XL_QUAN_LY_KHACH_SAN");
+
 const Ung_dung = express();
 
 // Dẫn tới thư mục public nếu có:
