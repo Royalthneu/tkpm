@@ -1,5 +1,11 @@
 {
+  "name": "quan_ly_khach_san",
+  "version": "1.0.0",
+  "main": "Ung_dung.js",
+  "scripts": {
+    "start": "node Ung_dung.js"
+  },
   "dependencies": {
-    "express": "^5.1.0"
+    "express": "^4.18.2"
   }
 }
