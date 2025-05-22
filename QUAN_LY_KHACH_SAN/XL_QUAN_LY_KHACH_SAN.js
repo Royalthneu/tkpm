@@ -1,11 +1,12 @@
 const FS = require("fs");
 const PATH = require("path");
 
-var Thu_muc_Du_lieu = "../Du_lieu";
-var Thu_muc_HTML = PATH.join(Thu_muc_Du_lieu, "HTML");
-var Thu_muc_Phieu_thue = PATH.join(Thu_muc_Du_lieu, "Phieu_thue");
-var Thu_muc_Loai_phong = PATH.join(Thu_muc_Du_lieu, "Loai_phong");
-var Thu_muc_Phong_thue = PATH.join(Thu_muc_Du_lieu, "Phong_thue");
+// ✅ Đường dẫn tuyệt đối dựa theo vị trí file JS này
+const Thu_muc_Du_lieu = PATH.join(__dirname, "../Du_lieu");
+const Thu_muc_HTML = PATH.join(Thu_muc_Du_lieu, "HTML");
+const Thu_muc_Phieu_thue = PATH.join(Thu_muc_Du_lieu, "Phieu_thue");
+const Thu_muc_Loai_phong = PATH.join(Thu_muc_Du_lieu, "Loai_phong");
+const Thu_muc_Phong_thue = PATH.join(Thu_muc_Du_lieu, "Phong_thue");
 
 class XL_QUAN_LY_KHACH_SAN {
     static Doc_Khung_HTML() {
