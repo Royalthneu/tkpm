@@ -1,0 +1,17 @@
+{
+  "So_phong": "C1",
+  "Ngay_nhan": "2024-09-23",
+  "Ngay_tra": "2024-09-29",
+  "Loai_phong": "LOAI C",
+  "Tien_thue": 2252052,
+  "Danh_sach_khach": [
+    {
+      "Ho_ten": "Phạm Hồng D",
+      "CMND": "444555666"
+    },
+    {
+      "Ho_ten": "Đỗ Minh E",
+      "CMND": "777888999"
+    }
+  ]
+}
