@@ -8,11 +8,8 @@ const XL_QUAN_LY_KHACH_SAN = require("./XL_QUAN_LY_KHACH_SAN");
 const Ung_dung = EXPRESS();
 
 Ung_dung.use("/Media", EXPRESS.static("..\\Media"));
-Ung_dung.use(EXPRESS.urlencoded({ extended: true }));
-
-Ung_dung.listen(3000, () => {
-    console.log(">> Server chạy tại http://localhost:3000");
-});
+Ung_dung.use(express.static("..."));
+Ung_dung.listen(PORT, () => console.log(`Server running on port ${PORT}`));
 
 // ==== Điều hướng trang chính
 Ung_dung.get("/", XL_Khoi_dong);
