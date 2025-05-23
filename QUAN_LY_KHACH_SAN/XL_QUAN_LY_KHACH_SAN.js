@@ -46,24 +46,31 @@ class XL_QUAN_LY_KHACH_SAN {
     }
 
     static Tao_Menu_Quan_ly(menu_active = "") {
-    return `
-  <nav class="navbar navbar-expand-lg navbar-dark bg-dark mb-4">
-    <div class="container-fluid">
-      <a class="navbar-brand d-flex align-items-center gap-2" href="/">
-        <img src="/Media/logo.png" height="32" alt="logo">
-        <span>Phân hệ Quản lý</span>
-      </a>
-      <div class="collapse navbar-collapse">
-        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-          <li class="nav-item"><a class="nav-link ${menu_active === "phieu" ? "active" : ""}" href="/QUAN_LY/PHIEU_THUE">Quản lý Phiếu thuê</a></li>
-          <li class="nav-item"><a class="nav-link ${menu_active === "phong" ? "active" : ""}" href="/QUAN_LY/PHONG_THUE">Trạng thái Phòng</a></li>
-          <li class="nav-item"><a class="nav-link ${menu_active === "tra_cuu" ? "active" : ""}" href="/QUAN_LY/TRA_CUU">Tra cứu</a></li>
-          <li class="nav-item"><a class="nav-link ${menu_active === "bao_cao" ? "active" : ""}" href="/QUAN_LY/BAO_CAO">Báo cáo</a></li>
-        </ul>
-      </div>
-    </div>
-  </nav>`;
+        return `
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark mb-4">
+          <div class="container-fluid">
+            <a class="navbar-brand d-flex align-items-center gap-2" href="/">
+              <img src="/Media/logo.png" height="32" alt="logo">
+              <span>Phân hệ Quản lý</span>
+            </a>
+        
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menuQL" aria-controls="menuQL" aria-expanded="false" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+            </button>
+        
+            <div class="collapse navbar-collapse" id="menuQL">
+              <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item"><a class="nav-link ${menu_active === "phieu" ? "active" : ""}" href="/QUAN_LY/PHIEU_THUE">Quản lý Phiếu thuê</a></li>
+                <li class="nav-item"><a class="nav-link ${menu_active === "phong" ? "active" : ""}" href="/QUAN_LY/PHONG_THUE">Trạng thái Phòng</a></li>
+                <li class="nav-item"><a class="nav-link ${menu_active === "tra_cuu" ? "active" : ""}" href="/QUAN_LY/TRA_CUU">Tra cứu</a></li>
+                <li class="nav-item"><a class="nav-link ${menu_active === "bao_cao" ? "active" : ""}" href="/QUAN_LY/BAO_CAO">Báo cáo</a></li>
+              </ul>
+            </div>
+          </div>
+        </nav>
+            `;
     }
+
 
     static Tao_Menu_Khach_hang() {
     return `
