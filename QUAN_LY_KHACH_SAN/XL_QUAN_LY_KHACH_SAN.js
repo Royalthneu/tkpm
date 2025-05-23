@@ -272,7 +272,7 @@ class XL_QUAN_LY_KHACH_SAN {
         .map(l => `<option value="${l}" ${l === loai_phong ? "selected" : ""}>${l || "-- Tất cả --"}</option>`)
         .join("");
 
-    const options_trang_thai = ["", "Phòng Trống", "Đã thuê"]
+    const options_trang_thai = ["", "Trống", "Đã thuê"]
         .map(t => `<option value="${t}" ${t === trang_thai ? "selected" : ""}>${t || "-- Tất cả --"}</option>`)
         .join("");
 
