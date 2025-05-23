@@ -124,8 +124,8 @@ Ung_dung.post("/QUAN_LY/PHIEU_THUE/SUA", (req, res) => {
         Danh_sach_khach: ds_khach
     };
 
-    const path = PATH.join("../Du_lieu/Phieu_thue", File_name);
-    FS.writeFileSync(path, JSON.stringify(phieu, null, 2), "utf-8");
+    const fullPath = path.join(__dirname, "../Du_lieu/Phieu_thue", File_name);
+    FS.writeFileSync(fullPath, JSON.stringify(phieu, null, 2), "utf-8");
 
     res.redirect("/QUAN_LY/PHIEU_THUE");
 });
