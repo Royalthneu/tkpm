@@ -47,29 +47,77 @@ class XL_QUAN_LY_KHACH_SAN {
 
     static Tao_Menu_Quan_ly(menu_active = "") {
         return `
-        <nav class="navbar navbar-expand-lg navbar-dark bg-dark mb-4">
-          <div class="container-fluid">
-            <a class="navbar-brand d-flex align-items-center gap-2" href="/">
-              <img src="/Media/logo.png" height="32" alt="logo">
-              <span>Phân hệ Quản lý</span>
-            </a>
-        
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menuQL" aria-controls="menuQL" aria-expanded="false" aria-label="Toggle navigation">
-              <span class="navbar-toggler-icon"></span>
-            </button>
-        
-            <div class="collapse navbar-collapse" id="menuQL">
-              <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                <li class="nav-item"><a class="nav-link ${menu_active === "phieu" ? "active" : ""}" href="/QUAN_LY/PHIEU_THUE">Quản lý Phiếu thuê</a></li>
-                <li class="nav-item"><a class="nav-link ${menu_active === "phong" ? "active" : ""}" href="/QUAN_LY/PHONG_THUE">Trạng thái Phòng</a></li>
-                <li class="nav-item"><a class="nav-link ${menu_active === "tra_cuu" ? "active" : ""}" href="/QUAN_LY/TRA_CUU">Tra cứu</a></li>
-                <li class="nav-item"><a class="nav-link ${menu_active === "bao_cao" ? "active" : ""}" href="/QUAN_LY/BAO_CAO">Báo cáo</a></li>
-              </ul>
+        <style>
+        @media (max-width: 768px) {
+            #mainMenu {
+                display: none;
+                flex-direction: column;
+                align-items: flex-start;
+                padding-left: 15px;
+                margin-top: 10px;
+            }
+            #mainMenu.show {
+                display: flex;
+            }
+            .toggle-btn {
+                display: inline-block;
+                margin-right: 10px;
+            }
+        }
+
+        @media (min-width: 769px) {
+            .toggle-btn {
+                display: none;
+            }
+            #mainMenu {
+                display: flex !important;
+                flex-direction: row;
+                justify-content: flex-end;
+                margin-top: 0;
+            }
+            #mainMenu .nav-link {
+                padding-left: 1rem;
+                padding-right: 1rem;
+            }
+        }
+        </style>
+
+        <nav class="navbar navbar-dark bg-dark mb-4 px-3">
+            <div class="container-fluid flex-column flex-md-row align-items-start align-items-md-center">
+                <div class="d-flex align-items-center w-100 justify-content-between">
+                    <div class="d-flex align-items-center">
+                        <button id="toggleMenu" class="btn btn-outline-light toggle-btn">☰ Menu</button>
+                        <a class="navbar-brand d-flex align-items-center gap-2 ms-2" href="/">
+                            <img src="/Media/logo.png" height="32" alt="logo">
+                            <span>Phân hệ Quản lý</span>
+                        </a>
+                    </div>
+                </div>
+                <div id="mainMenu" class="mt-2 mt-md-0">
+                    <ul class="navbar-nav flex-column flex-md-row">
+                        <li class="nav-item"><a class="nav-link ${menu_active === "phieu" ? "active" : ""}" href="/QUAN_LY/PHIEU_THUE">Quản lý Phiếu thuê</a></li>
+                        <li class="nav-item"><a class="nav-link ${menu_active === "phong" ? "active" : ""}" href="/QUAN_LY/PHONG_THUE">Trạng thái Phòng</a></li>
+                        <li class="nav-item"><a class="nav-link ${menu_active === "tra_cuu" ? "active" : ""}" href="/QUAN_LY/TRA_CUU">Tra cứu</a></li>
+                        <li class="nav-item"><a class="nav-link ${menu_active === "bao_cao" ? "active" : ""}" href="/QUAN_LY/BAO_CAO">Báo cáo</a></li>
+                    </ul>
+                </div>
             </div>
-          </div>
         </nav>
-            `;
+
+        <script>
+            document.addEventListener("DOMContentLoaded", function () {
+                const btn = document.getElementById("toggleMenu");
+                const menu = document.getElementById("mainMenu");
+                if (btn && menu) {
+                    btn.addEventListener("click", () => menu.classList.toggle("show"));
+                }
+            });
+        </script>
+        `;
     }
+
+
+
 
 
     static Tao_Menu_Khach_hang() {

@@ -5,7 +5,7 @@
       "type": "node",
       "request": "launch",
       "name": "Chạy ứng dụng quản lý khách sạn",
-      "program": "${workspaceFolder}/QUAN_LY_KHACH_SAN_1_EXPRESS/Ung_dung.js"
+      "program": "${workspaceFolder}/QUAN_LY_KHACH_SAN/Ung_dung.js"
     }
   ]
 }
