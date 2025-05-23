@@ -105,7 +105,7 @@ Ung_dung.get("/QUAN_LY/PHIEU_THUE/SUA", (req, res) => {
 
         const html = XL_QUAN_LY_KHACH_SAN.Tao_Trang_HTML_Phan_he(
             () => XL_QUAN_LY_KHACH_SAN.Tao_Menu_Quan_ly("phieu"),
-            XL_QUAN_LY_KHACH_SAN.Tao_Chuoi_HTML_Form_Them_Phieu_thue(...)
+            XL_QUAN_LY_KHACH_SAN.Tao_Chuoi_HTML_Form_Them_Phieu_thue(ds_phong, ds_loai, phieu, true)
         );
 
         res.send(Khung_HTML.replace("Chuoi_HTML", html));
