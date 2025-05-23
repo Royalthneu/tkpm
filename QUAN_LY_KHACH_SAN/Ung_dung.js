@@ -90,7 +90,7 @@ Ung_dung.get("/QUAN_LY/PHIEU_THUE", (req, res) => {
 
 Ung_dung.get("/QUAN_LY/PHIEU_THUE/SUA", (req, res) => {
     const file = req.query.file;
-    const path = PATH.join("../Du_lieu/Phieu_thue", file);
+    const fullPath = path.join(__dirname, "../Du_lieu/Phieu_thue", file);
     const phieu = JSON.parse(FS.readFileSync(path, "utf-8"));
     phieu._file = file;
 
@@ -132,7 +132,7 @@ Ung_dung.post("/QUAN_LY/PHIEU_THUE/SUA", (req, res) => {
 
 Ung_dung.get("/QUAN_LY/PHIEU_THUE/XOA", (req, res) => {
     const file = req.query.file;
-    const path = PATH.join("../Du_lieu/Phieu_thue", file);
+    const fullPath = path.join(__dirname, "../Du_lieu/Phieu_thue", file);
     if (FS.existsSync(path)) {
         FS.unlinkSync(path);
     }
