@@ -125,10 +125,14 @@ Ung_dung.post("/QUAN_LY/PHIEU_THUE/SUA", (req, res) => {
     };
 
     const fullPath = path.join(__dirname, "../Du_lieu/Phieu_thue", File_name);
-    FS.writeFileSync(fullPath, JSON.stringify(phieu, null, 2), "utf-8");
-
-    res.redirect("/QUAN_LY/PHIEU_THUE");
+    try {
+        FS.writeFileSync(fullPath, JSON.stringify(phieu, null, 2), "utf-8");
+        res.redirect("/QUAN_LY/PHIEU_THUE");
+    } catch (err) {
+        res.status(500).send(`<pre>Lỗi ghi file: ${err.message}</pre>`);
+    }
 });
+
 
 Ung_dung.get("/QUAN_LY/PHIEU_THUE/XOA", (req, res) => {
     const file = req.query.file;
