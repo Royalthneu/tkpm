@@ -91,7 +91,7 @@ Ung_dung.get("/QUAN_LY/PHIEU_THUE", (req, res) => {
 Ung_dung.get("/QUAN_LY/PHIEU_THUE/SUA", (req, res) => {
     const file = req.query.file;
     const fullPath = path.join(__dirname, "../Du_lieu/Phieu_thue", file);
-    const phieu = JSON.parse(FS.readFileSync(path, "utf-8"));
+    const phieu = JSON.parse(FS.readFileSync(fullPath, "utf-8"));
     phieu._file = file;
 
     const ds_loai = XL_QUAN_LY_KHACH_SAN.Doc_Danh_sach_Loai_phong();
@@ -146,7 +146,6 @@ Ung_dung.get("/QUAN_LY/PHONG_THUE", (req, res) => {
     const { Loai_phong = "", Trang_thai = "", quick = "" } = req.query;
     let ds_phong = XL_QUAN_LY_KHACH_SAN.Doc_Danh_sach_Phong_thue();
 
-    // ⛔ THÊM ĐOẠN LỌC DƯỚI ĐÂY
     if (Loai_phong) {
         ds_phong = ds_phong.filter(p => p.Loai_phong === Loai_phong);
     }
@@ -326,7 +325,7 @@ function XL_Xu_ly_Them_Phieu(req, res) {
         Danh_sach_khach: danh_sach_khach
     };
 
-    const thu_muc = PATH.join("../Du_lieu", "Phieu_thue");
+    const thu_muc = PATH.join(__dirname, "../Du_lieu/Phieu_thue");
     const ds_file = FS.readdirSync(thu_muc).filter(f => f.startsWith("phieu_thue_"));
     const stt = ds_file.length + 1;
     const ten_file = `phieu_thue_${String(stt).padStart(3, "0")}.json`;
