@@ -20,12 +20,11 @@ Ung_dung.listen(PORT, () => {
 Ung_dung.get("/", XL_Khoi_dong);
 
 Ung_dung.get("/login", (req, res) => {
-    const role = req.query.role || "admin"; // mặc định là quản lý
     const html = `
     <div class="container mt-5" style="max-width:400px;">
-        <h4>🔐 Đăng nhập ${role === "guest" ? "khách hàng" : "quản lý"}</h4>
+        <h4>🔐 Đăng nhập quản lý</h4>
         <form method="post" action="/login" class="border p-4 rounded">
-            <input type="hidden" name="role" value="${role}" />
+            <input type="hidden" name="role" value="admin" />
             <div class="mb-3">
                 <label>Tài khoản:</label>
                 <input name="username" class="form-control" required/>
@@ -41,16 +40,14 @@ Ung_dung.get("/login", (req, res) => {
 });
 
 
+
 Ung_dung.post("/login", (req, res) => {
     const { username, password, role } = req.body;
 
     const isAdmin = username === "admin" && password === "123";
-    const isGuest = username === "guest" && password === "123";
 
     if (role === "admin" && isAdmin) {
         res.redirect("/QUAN_LY/PHONG_THUE?hello=true");
-    } else if (role === "guest" && isGuest) {
-        res.redirect("/KHACH_HANG/TRA_CUU_PHONG?hello=true");
     } else {
         res.redirect("/?login=true");
     }
@@ -275,7 +272,7 @@ function XL_Khoi_dong(req, res) {
         <p>Vui lòng chọn phân hệ để sử dụng:</p>
         <div class="d-flex justify-content-center gap-4 mt-4 px-4">
             <a href="/login?role=admin" class="btn btn-primary btn-lg">🔐 Phân hệ Quản lý</a>
-            <a href="/login?role=guest" class="btn btn-outline-secondary btn-lg">🌐 Phân hệ Khách hàng</a>
+            <a href="/KHACH_HANG/TRA_CUU_PHONG?hello=true" class="btn btn-outline-secondary btn-lg">🌐 Phân hệ Khách hàng</a>
         </div>
         <div class="d-flex justify-content-center mt-5">
             <a href="/">
