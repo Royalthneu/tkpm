@@ -346,55 +346,55 @@ class XL_QUAN_LY_KHACH_SAN {
         const khach1 = phieu?.Danh_sach_khach?.[0] || {};
         const khach2 = phieu?.Danh_sach_khach?.[1] || {};
         const file_name = phieu?._file || "";
-
+    
         const optionsPhong = ds_phong.map(p => 
-            `<option value="${p.So_phong}" ${p.So_phong === so_phong ? "selected" : ""}>
+            `<option value="${p.So_phong}" data-loai="${p.Loai_phong}" ${p.So_phong === so_phong ? "selected" : ""}>
                 ${p.So_phong} (${p.Trang_thai})
             </option>`).join("");
-
+    
         const optionsLoai = ds_loai.map(l => {
             const gia = l.Don_gia || 0;
             const selected = l.Ten === loai_phong ? "selected" : "";
             return `<option value="${l.Ten}" ${selected}>${l.Ten} - ${gia.toLocaleString("vi-VN")}₫</option>`;
         }).join("");
-
+    
         const action_url = isEdit ? "/QUAN_LY/PHIEU_THUE/SUA" : "/PHIEU_THUE/Them";
-
+    
         return `
             <form method="post" action="${action_url}" class="p-3 border rounded">
                 <h4>${isEdit ? "Cập nhật" : "Thêm"} phiếu thuê phòng</h4>
-
+    
                 ${isEdit ? `<input type="hidden" name="File_name" value="${file_name}" />` : ""}
-
+    
                 <div class="form-group mb-2">
                     <label>Số phòng:</label>
-                    <select name="So_phong" class="form-control" required>
+                    <select name="So_phong" id="soPhong" class="form-control" required>
                         ${optionsPhong}
                     </select>
                 </div>
-
+    
                 <div class="form-group mb-2">
                     <label>Loại phòng:</label>
-                    <select name="Loai_phong" class="form-control" required>
+                    <select name="Loai_phong" id="loaiPhong" class="form-control" required>
                         ${optionsLoai}
                     </select>
                 </div>
-
+    
                 <div class="form-group mb-2">
                     <label>Ngày nhận:</label>
                     <input name="Ngay_nhan" type="date" class="form-control" value="${ngay_nhan}" required />
                 </div>
-
+    
                 <div class="form-group mb-2">
                     <label>Ngày trả:</label>
                     <input name="Ngay_tra" type="date" class="form-control" value="${ngay_tra}" required />
                 </div>
-
+    
                 <div class="form-group mb-2">
                     <label>Tiền thuê:</label>
                     <input name="Tien_thue" type="number" class="form-control" value="${tien_thue}" required />
                 </div>
-
+    
                 <hr/>
                 <div class="form-group mb-2">
                     <label>Khách 1 - Họ tên:</label>
@@ -402,20 +402,34 @@ class XL_QUAN_LY_KHACH_SAN {
                     <label>Số CMND:</label>
                     <input name="CMND_1" class="form-control" value="${khach1.CMND || ""}" />
                 </div>
-
+    
                 <div class="form-group mb-2">
                     <label>Khách 2 - Họ tên:</label>
                     <input name="Ho_ten_2" class="form-control" value="${khach2.Ho_ten || ""}" />
                     <label>Số CMND:</label>
                     <input name="CMND_2" class="form-control" value="${khach2.CMND || ""}" />
                 </div>
-
+    
                 <button class="btn btn-${isEdit ? "warning" : "success"} mt-3">
                     ${isEdit ? "Cập nhật" : "Thêm"} phiếu thuê
                 </button>
             </form>
+    
+            <script>
+                document.getElementById("soPhong")?.addEventListener("change", function () {
+                    const selected = this.options[this.selectedIndex];
+                    const loai = selected.getAttribute("data-loai");
+                    const selectLoai = document.getElementById("loaiPhong");
+                    if (loai) {
+                        for (let opt of selectLoai.options) {
+                            opt.selected = (opt.value === loai);
+                        }
+                    }
+                });
+            </script>
         `;
     }
+
 
     static Tao_Chuoi_HTML_Bao_cao_Doanh_thu(ds, tu_ngay = "", den_ngay = "") {
         const tong_tien = ds.reduce((acc, p) => acc + (p.Tien_thue || 0), 0);
