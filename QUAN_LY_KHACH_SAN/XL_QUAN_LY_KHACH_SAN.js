@@ -288,7 +288,7 @@ class XL_QUAN_LY_KHACH_SAN {
             const phieu = JSON.parse(FS.readFileSync(duong_dan, "utf-8"));
             phieu._file = file; // <-- Gắn tên file để sử dụng cho sửa/xoá
 
-            const matchPhong = !So_phong || phieu.So_phong === So_phong;
+            const matchPhong = !So_phong || phieu.So_phong.toLowerCase().includes(So_phong.toLowerCase());
             const matchNgay = !Ngay_nhan || phieu.Ngay_nhan === Ngay_nhan;
             const matchTen = !Ho_ten || (phieu.Danh_sach_khach || []).some(k =>
                 k.Ho_ten.toLowerCase().includes(Ho_ten.toLowerCase())
