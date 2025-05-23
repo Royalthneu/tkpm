@@ -142,26 +142,16 @@ Ung_dung.get("/QUAN_LY/PHIEU_THUE/XOA", (req, res) => {
 Ung_dung.get("/QUAN_LY/PHONG_THUE", (req, res) => {
     const { hello } = req.query;
     let loi_chao = hello === "true" ? `<div class="alert alert-info">👋 Xin chào quản lý</div>` : "";
-    
+
     const { Loai_phong = "", Trang_thai = "", quick = "" } = req.query;
     let ds_phong = XL_QUAN_LY_KHACH_SAN.Doc_Danh_sach_Phong_thue();
 
-    if (quick) {
-        const ds_phieu = XL_QUAN_LY_KHACH_SAN.Tra_cuu_Phieu_thue({});
-        const today = new Date();
-        let denNgay = new Date();
-
-        if (quick === "week") denNgay.setDate(today.getDate() + 7);
-        if (quick === "month") denNgay.setMonth(today.getMonth() + 1);
-
-        const phong_thue = ds_phieu
-            .filter(p => {
-                const nhan = new Date(p.Ngay_nhan);
-                return nhan >= today && nhan <= denNgay;
-            })
-            .map(p => p.So_phong);
-
-        ds_phong = ds_phong.filter(p => phong_thue.includes(p.So_phong));
+    // ⛔ THÊM ĐOẠN LỌC DƯỚI ĐÂY
+    if (Loai_phong) {
+        ds_phong = ds_phong.filter(p => p.Loai_phong === Loai_phong);
+    }
+    if (Trang_thai) {
+        ds_phong = ds_phong.filter(p => p.Trang_thai === Trang_thai);
     }
 
     const ds_loai = XL_QUAN_LY_KHACH_SAN.Doc_Danh_sach_Loai_phong();
@@ -173,6 +163,7 @@ Ung_dung.get("/QUAN_LY/PHONG_THUE", (req, res) => {
 
     res.send(Khung_HTML.replace("Chuoi_HTML", html));
 });
+
 
 Ung_dung.get("/QUAN_LY/TRA_CUU", (req, res) => {
     const { So_phong = "", Ho_ten = "", Tu_ngay = "", Den_ngay = "", quick = "" } = req.query;
