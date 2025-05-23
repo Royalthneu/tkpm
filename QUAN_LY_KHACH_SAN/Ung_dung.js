@@ -6,6 +6,9 @@ const XL_QUAN_LY_KHACH_SAN = require("./XL_QUAN_LY_KHACH_SAN");
 
 const Ung_dung = express();
 
+// Xử lý POST form
+Ung_dung.use(express.urlencoded({ extended: true }));
+
 // Dẫn tới thư mục public nếu có:
 Ung_dung.use('/Media', express.static(path.join(__dirname, '../Media')));
 Ung_dung.use('/Du_lieu', express.static(path.join(__dirname, '../Du_lieu')));
