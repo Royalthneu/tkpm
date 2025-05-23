@@ -282,7 +282,7 @@ function XL_Khoi_dong(req, res) {
         </div>
         <div class="d-flex justify-content-center mt-5">
             <a href="/">
-                <img src="/Media/Logo.png" alt="Trang chủ" height="500">
+                <img src="/Media/logo.png" alt="Trang chủ" height="500">
             </a>
         </div>
         <div style="position:fixed;top:10px;right:10px;z-index:10000">
