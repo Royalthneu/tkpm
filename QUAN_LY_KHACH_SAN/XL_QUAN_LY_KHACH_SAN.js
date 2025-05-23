@@ -55,8 +55,8 @@ class XL_QUAN_LY_KHACH_SAN {
       </a>
       <div class="collapse navbar-collapse">
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-          <li class="nav-item"><a class="nav-link ${menu_active === "phieu" ? "active" : ""}" href="/QUAN_LY/PHIEU_THUE">Phiếu thuê</a></li>
-          <li class="nav-item"><a class="nav-link ${menu_active === "phong" ? "active" : ""}" href="/QUAN_LY/PHONG_THUE">Trạng thái phòng</a></li>
+          <li class="nav-item"><a class="nav-link ${menu_active === "phieu" ? "active" : ""}" href="/QUAN_LY/PHIEU_THUE">Quản lý Phiếu thuê</a></li>
+          <li class="nav-item"><a class="nav-link ${menu_active === "phong" ? "active" : ""}" href="/QUAN_LY/PHONG_THUE">Trạng thái Phòng</a></li>
           <li class="nav-item"><a class="nav-link ${menu_active === "tra_cuu" ? "active" : ""}" href="/QUAN_LY/TRA_CUU">Tra cứu</a></li>
           <li class="nav-item"><a class="nav-link ${menu_active === "bao_cao" ? "active" : ""}" href="/QUAN_LY/BAO_CAO">Báo cáo</a></li>
         </ul>
