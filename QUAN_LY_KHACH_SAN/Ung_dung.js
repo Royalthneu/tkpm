@@ -93,11 +93,11 @@ Ung_dung.get("/QUAN_LY/PHIEU_THUE/SUA", (req, res) => {
         const file = req.query.file;
         const fullPath = path.join(__dirname, "../Du_lieu/Phieu_thue", file);
 
-        if (!FS.existsSync(fullPath)) {
+        if (!fs.existsSync(fullPath)) {
             return res.status(404).send(`<h3>❌ Không tìm thấy file: ${file}</h3>`);
         }
 
-        const phieu = JSON.parse(FS.readFileSync(fullPath, "utf-8"));
+        const phieu = JSON.parse(fs.readFileSync(fullPath, "utf-8"));
         phieu._file = file;
 
         const ds_loai = XL_QUAN_LY_KHACH_SAN.Doc_Danh_sach_Loai_phong();
@@ -136,7 +136,7 @@ Ung_dung.post("/QUAN_LY/PHIEU_THUE/SUA", (req, res) => {
 
     const fullPath = path.join(__dirname, "../Du_lieu/Phieu_thue", File_name);
     try {
-        FS.writeFileSync(fullPath, JSON.stringify(phieu, null, 2), "utf-8");
+        fs.writeFileSync(fullPath, JSON.stringify(phieu, null, 2), "utf-8");
         res.redirect("/QUAN_LY/PHIEU_THUE");
     } catch (err) {
         res.status(500).send(`<pre>Lỗi ghi file: ${err.message}</pre>`);
@@ -146,8 +146,8 @@ Ung_dung.post("/QUAN_LY/PHIEU_THUE/SUA", (req, res) => {
 Ung_dung.get("/QUAN_LY/PHIEU_THUE/XOA", (req, res) => {
     const file = req.query.file;
     const fullPath = path.join(__dirname, "../Du_lieu/Phieu_thue", file);
-    if (FS.existsSync(path)) {
-        FS.unlinkSync(path);
+    if (fs.existsSync(path)) {
+        fs.unlinkSync(path);
     }
     res.redirect("/QUAN_LY/PHIEU_THUE");
 });
@@ -339,12 +339,12 @@ function XL_Xu_ly_Them_Phieu(req, res) {
     };
 
     const thu_muc = PATH.join(__dirname, "../Du_lieu/Phieu_thue");
-    const ds_file = FS.readdirSync(thu_muc).filter(f => f.startsWith("phieu_thue_"));
+    const ds_file = fs.readdirSync(thu_muc).filter(f => f.startsWith("phieu_thue_"));
     const stt = ds_file.length + 1;
     const ten_file = `phieu_thue_${String(stt).padStart(3, "0")}.json`;
     const duong_dan = PATH.join(thu_muc, ten_file);
 
-    FS.writeFileSync(duong_dan, JSON.stringify(phieu_moi, null, 2), "utf-8");
+    fs.writeFileSync(duong_dan, JSON.stringify(phieu_moi, null, 2), "utf-8");
 
     res.redirect("/"); // hoặc hiển thị thông báo thành công
 }
