@@ -10,8 +10,8 @@ const Ung_dung = express();
 Ung_dung.use(express.urlencoded({ extended: true }));
 
 // Dẫn tới thư mục public nếu có:
-Ung_dung.use('/Media', express.static(path.join(__dirname, '../Media')));
-Ung_dung.use('/Du_lieu', express.static(path.join(__dirname, '../Du_lieu')));
+Ung_dung.use('/Media', express.static(fullpath.join(__dirname, '../Media')));
+Ung_dung.use('/Du_lieu', express.static(fullpath.join(__dirname, '../Du_lieu')));
 
 // Khởi động
 const PORT = process.env.PORT || 3000;
@@ -132,7 +132,6 @@ Ung_dung.post("/QUAN_LY/PHIEU_THUE/SUA", (req, res) => {
         res.status(500).send(`<pre>Lỗi ghi file: ${err.message}</pre>`);
     }
 });
-
 
 Ung_dung.get("/QUAN_LY/PHIEU_THUE/XOA", (req, res) => {
     const file = req.query.file;
