@@ -89,21 +89,31 @@ Ung_dung.get("/QUAN_LY/PHIEU_THUE", (req, res) => {
 });
 
 Ung_dung.get("/QUAN_LY/PHIEU_THUE/SUA", (req, res) => {
-    const file = req.query.file;
-    const fullPath = path.join(__dirname, "../Du_lieu/Phieu_thue", file);
-    const phieu = JSON.parse(FS.readFileSync(fullPath, "utf-8"));
-    phieu._file = file;
+    try {
+        const file = req.query.file;
+        const fullPath = path.join(__dirname, "../Du_lieu/Phieu_thue", file);
 
-    const ds_loai = XL_QUAN_LY_KHACH_SAN.Doc_Danh_sach_Loai_phong();
-    const ds_phong = XL_QUAN_LY_KHACH_SAN.Doc_Danh_sach_Phong_thue();
+        if (!FS.existsSync(fullPath)) {
+            return res.status(404).send(`<h3>❌ Không tìm thấy file: ${file}</h3>`);
+        }
 
-    const html = XL_QUAN_LY_KHACH_SAN.Tao_Trang_HTML_Phan_he(
-        XL_QUAN_LY_KHACH_SAN.Tao_Menu_Quan_ly("phieu"),
-        XL_QUAN_LY_KHACH_SAN.Tao_Chuoi_HTML_Form_Them_Phieu_thue(ds_phong, ds_loai, phieu, true)
-    );
+        const phieu = JSON.parse(FS.readFileSync(fullPath, "utf-8"));
+        phieu._file = file;
 
-    res.send(Khung_HTML.replace("Chuoi_HTML", html));
+        const ds_loai = XL_QUAN_LY_KHACH_SAN.Doc_Danh_sach_Loai_phong();
+        const ds_phong = XL_QUAN_LY_KHACH_SAN.Doc_Danh_sach_Phong_thue();
+
+        const html = XL_QUAN_LY_KHACH_SAN.Tao_Trang_HTML_Phan_he(
+            XL_QUAN_LY_KHACH_SAN.Tao_Menu_Quan_ly("phieu"),
+            XL_QUAN_LY_KHACH_SAN.Tao_Chuoi_HTML_Form_Them_Phieu_thue(ds_phong, ds_loai, phieu, true)
+        );
+
+        res.send(Khung_HTML.replace("Chuoi_HTML", html));
+    } catch (err) {
+        res.status(500).send(`<h3>Lỗi khi mở form sửa: ${err.message}</h3>`);
+    }
 });
+
 
 Ung_dung.post("/QUAN_LY/PHIEU_THUE/SUA", (req, res) => {
     const {
