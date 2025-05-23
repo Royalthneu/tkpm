@@ -20,10 +20,12 @@ Ung_dung.listen(PORT, () => {
 Ung_dung.get("/", XL_Khoi_dong);
 
 Ung_dung.get("/login", (req, res) => {
+    const role = req.query.role || "admin"; // mặc định là quản lý
     const html = `
     <div class="container mt-5" style="max-width:400px;">
-        <h4>🔐 Đăng nhập quản lý</h4>
+        <h4>🔐 Đăng nhập ${role === "guest" ? "khách hàng" : "quản lý"}</h4>
         <form method="post" action="/login" class="border p-4 rounded">
+            <input type="hidden" name="role" value="${role}" />
             <div class="mb-3">
                 <label>Tài khoản:</label>
                 <input name="username" class="form-control" required/>
@@ -38,12 +40,19 @@ Ung_dung.get("/login", (req, res) => {
     res.send(Khung_HTML.replace("Chuoi_HTML", html));
 });
 
+
 Ung_dung.post("/login", (req, res) => {
-    const { username, password } = req.body;
-    if (username === "admin" && password === "123") {
-        res.redirect("/QUAN_LY");
+    const { username, password, role } = req.body;
+
+    const isAdmin = username === "admin" && password === "123";
+    const isGuest = username === "guest" && password === "123";
+
+    if (role === "admin" && isAdmin) {
+        res.redirect("/QUAN_LY/PHONG_THUE?hello=true");
+    } else if (role === "guest" && isGuest) {
+        res.redirect("/KHACH_HANG/TRA_CUU_PHONG?hello=true");
     } else {
-        res.redirect("/?login=true"); // Hiện lại dialog
+        res.redirect("/?login=true");
     }
 });
 
@@ -131,6 +140,9 @@ Ung_dung.get("/QUAN_LY/PHIEU_THUE/XOA", (req, res) => {
 });
 
 Ung_dung.get("/QUAN_LY/PHONG_THUE", (req, res) => {
+    const { hello } = req.query;
+    let loi_chao = hello === "true" ? `<div class="alert alert-info">👋 Xin chào quản lý</div>` : "";
+    
     const { Loai_phong = "", Trang_thai = "", quick = "" } = req.query;
     let ds_phong = XL_QUAN_LY_KHACH_SAN.Doc_Danh_sach_Phong_thue();
 
@@ -156,7 +168,7 @@ Ung_dung.get("/QUAN_LY/PHONG_THUE", (req, res) => {
 
     const html = XL_QUAN_LY_KHACH_SAN.Tao_Trang_HTML_Phan_he(
         () => XL_QUAN_LY_KHACH_SAN.Tao_Menu_Quan_ly("phong"),
-        XL_QUAN_LY_KHACH_SAN.Tao_Chuoi_HTML_Danh_sach_Phong(ds_phong, ds_loai, Loai_phong, Trang_thai)
+        loi_chao + XL_QUAN_LY_KHACH_SAN.Tao_Chuoi_HTML_Danh_sach_Phong(ds_phong, ds_loai, Loai_phong, Trang_thai)
     );
 
     res.send(Khung_HTML.replace("Chuoi_HTML", html));
@@ -237,8 +249,7 @@ function XL_Khoi_dong(req, res) {
     const hien_dialog = req.query.login === "true";
 
     const dialogHTML = hien_dialog
-        ? `
-        <div style="position:fixed;top:0;left:0;width:100%;height:100%;background:#00000088;z-index:9999">
+        ? `<div style="position:fixed;top:0;left:0;width:100%;height:100%;background:#00000088;z-index:9999">
             <div style="background:white;padding:20px;border-radius:10px;max-width:400px;margin:100px auto;">
                 <form method="post" action="/login">
                     <h5>Đăng nhập hệ thống</h5>
@@ -256,33 +267,30 @@ function XL_Khoi_dong(req, res) {
                     </div>
                 </form>
             </div>
-        </div>
-        `
-        : "";
+        </div>` : "";
 
     const html = `
     <div class="container text-center mt-5">
         <h2>Hệ thống Quản lý Khách sạn</h2>
         <p>Vui lòng chọn phân hệ để sử dụng:</p>
         <div class="d-flex justify-content-center gap-4 mt-4 px-4">
-            <a href="/QUAN_LY" class="btn btn-primary btn-lg">🔐 Phân hệ Quản lý</a>
-            <a href="/KHACH_HANG" class="btn btn-outline-secondary btn-lg">🌐 Phân hệ Khách hàng</a>
+            <a href="/login?role=admin" class="btn btn-primary btn-lg">🔐 Phân hệ Quản lý</a>
+            <a href="/login?role=guest" class="btn btn-outline-secondary btn-lg">🌐 Phân hệ Khách hàng</a>
         </div>
         <div class="d-flex justify-content-center mt-5">
             <a href="/">
                 <img src="/Media/Logo.png" alt="Trang chủ" height="500">
             </a>
         </div>
-
         <div style="position:fixed;top:10px;right:10px;z-index:10000">
             <a href="/?login=true" class="btn btn-outline-primary">🔐 Đăng nhập</a>
         </div>
     </div>
-    ${dialogHTML}
-    `;
+    ${dialogHTML}`;
 
     res.send(Khung_HTML.replace("Chuoi_HTML", html));
 }
+
 
 
 // ==== Hàm xử lý tra cứu phiếu thuê
@@ -340,6 +348,9 @@ function XL_Xu_ly_Them_Phieu(req, res) {
 
 //PHÂN HỆ KHÁCH HÀNG
 Ung_dung.get("/KHACH_HANG/TRA_CUU_PHONG", (req, res) => {
+    const { hello } = req.query;
+    let loi_chao = hello === "true" ? `<div class="alert alert-success">👋 Xin chào khách hàng</div>` : "";
+    
     const ds_loai = XL_QUAN_LY_KHACH_SAN.Doc_Danh_sach_Loai_phong();
     const ds_phong = XL_QUAN_LY_KHACH_SAN.Doc_Danh_sach_Phong_thue();
 
@@ -375,6 +386,7 @@ Ung_dung.get("/KHACH_HANG/TRA_CUU_PHONG", (req, res) => {
     }
 
     const Chuoi_HTML = XL_QUAN_LY_KHACH_SAN.Tao_Menu_Khach_hang() +
+        loi_chao +
         XL_QUAN_LY_KHACH_SAN.Tao_Chuoi_HTML_Form_Tra_cuu_Phong(ds_loai) +
         `<hr/>` +
         XL_QUAN_LY_KHACH_SAN.Tao_Chuoi_HTML_Danh_sach_Phong_Trong(ds_kq, ds_loai);
