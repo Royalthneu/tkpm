@@ -433,6 +433,12 @@ class XL_QUAN_LY_KHACH_SAN {
                         }
                     }
                 });
+
+                  $(document).ready(function () {
+                    $('.navbar-toggler').click(function () {
+                      $('#navbarQuanLy').collapse('toggle');
+                    });
+                  });
             </script>
         `;
     }
